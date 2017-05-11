@@ -51,8 +51,9 @@ public:
      *  the sequence of bits coding the given symbol.
      *  PRECONDITION: build() has been called, to create the coding
      *  tree, and initialize root pointer and leaves vector.
+     *  TODO UNCOMMENT THIS
      */
-    void encode(byte symbol, BitOutputStream& out) const;
+    //void encode(byte symbol, BitOutputStream& out) const;
 
     /** Write to the given ofstream
      *  the sequence of bits (as ASCII) coding the given symbol.
@@ -66,9 +67,10 @@ public:
 
     /** Return symbol coded in the next sequence of bits from the stream.
      *  PRECONDITION: build() has been called, to create the coding
-     *  tree, and initialize root pointer and leaves vector.
+     *  tree, and initialize root pointer and leaves vector. TODO
+     *  UNCOMMENT THIS
      */
-    int decode(BitInputStream& in) const;
+    //int decode(BitInputStream& in) const;
 
     /** Return the symbol coded in the next sequence of bits (represented as 
      *  ASCII text) from the ifstream.
@@ -78,6 +80,8 @@ public:
      *  IN THE FINAL SUBMISSION.
      */
     int decode(ifstream& in) const;
+
+    void deleteAll(HCNode* n);
 
 };
 
