@@ -97,5 +97,6 @@ int main (int argc, char* argv[])
   }
   READ.close();
   WRITE.close();
+  delete READ2;
   return 1;
 }

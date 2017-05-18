@@ -85,6 +85,7 @@ int main(int argc, char* argv[])
   WRITE2->flush();
   READ.close();
   WRITE.close();
+  delete WRITE2;
   /*if('a'<'b'){
     cout << "hello" << endl;
 	}
