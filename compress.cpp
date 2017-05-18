@@ -9,6 +9,7 @@
 #include "HCTree.h"
 #include <ctype.h>
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -25,17 +26,23 @@ int main(int argc, char* argv[])
   //treeVec = vector<HCNode*>(256, (HCNode*) 0);
   unsigned int k = 0;
   unsigned char y;
+  unsigned int x = 0;
+  string theString;
   //char z;
 
   READ.open(argv[1]);
 
   // Read through the file and increment when I fin the character
   //while (READ.get(y) != NULL)
+  //READ.get();
   while (1)
   {
+    //std::getline(READ, theString);
+    //x = stoi(theString);
     y = READ.get();
     //treeVec[(int) y]++;
     treeVec[y]++;
+    //treeVec[x]++;
     //cout << "TREEVEC" << endl;
     //treeVec.push();
     if (!READ.good())
@@ -59,9 +66,13 @@ int main(int argc, char* argv[])
   //cout << "AFTER JK " << endl;
   //while (READ.get(z) != NULL)
   //while (READ.get(y) != NULL)
+  // To Throw a newline character
+  //READ.get();
   while (1)
   {
+    //std::getline(READ, theString);
     y = READ.get();
+    
     //cout << "START ENCODE " << endl;
     //theTree.encode((byte)y, WRITE);
     theTree.encode((byte)y, *WRITE2);

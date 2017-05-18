@@ -8,6 +8,7 @@
 #include "HCTree.h"
 #include <ctype.h>
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -32,6 +33,7 @@ int main (int argc, char* argv[])
   unsigned int addStores = 0;
   // Character we are reading in
   unsigned char y;
+  string theString;
   //unsigned char nxtChar;
   //char z;
 
@@ -40,9 +42,12 @@ int main (int argc, char* argv[])
   //READ2->fill();
   for (k = 0; k < treeVec.size(); k++)
   {
-    READ>>store;
-    treeVec[k] = store;
-    addStores = addStores + store;
+    std::getline(READ, theString);
+    //READ>>store;
+    //treeVec[k] = store;
+    treeVec[k] = (unsigned int)stoi(theString,nullptr, 0);
+    //addStores = addStores + store;
+    addStores = addStores + treeVec[k];
     //cout << "THE FIRST FOR " << endl;
   }
 
@@ -62,7 +67,7 @@ int main (int argc, char* argv[])
   // Build the tree 
   theTree.build(treeVec);
   BitInputStream* READ2 = new BitInputStream(READ);
-  READ2->fill();
+  //READ2->fill();
 
   //cout << " SO MUCH CODE" << endl;
   WRITE.open(argv[2]);
@@ -71,7 +76,7 @@ int main (int argc, char* argv[])
   //READ2->fill();
   //cout << addStores << endl;
   // Decoding all the necessary characters
-  for (k = 0; k < addStores; k++)
+  for (k = 0; k < addStores-1; k++)
   {
     //y = theTree.decode(READ);
     y = theTree.decode(*READ2);
@@ -80,6 +85,14 @@ int main (int argc, char* argv[])
     {
       break;
     }
+    /*if (y == EOF)
+    {
+      break;
+    }*/
+    /*if (y < 0 || y > 256)
+    {
+      break;
+    }*/
     WRITE << y;
   }
   READ.close();
