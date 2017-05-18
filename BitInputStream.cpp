@@ -23,45 +23,24 @@ void BitInputStream::fill()
 
 unsigned int BitInputStream::readBit()
 {
+  // Checking the bit that we need
   unsigned int needBit = 0;
-  //unsigned char mask = buf;
-  //mask = mask & 0;
-  //mask = mask | 1;
-  //mask = mask << nbits;
   // If the buffer is read we want to get them and reset the nbits
   if (nbits == 8)
   {
     fill();
   }
-  //mask = mask | 1;
-  //mask = mask >> nbits;
-  //mask = mask & 1;
-  //return mask;
 
   // Check if the bit read is 0 so we return 0
   needBit = (buf << nbits) & (1 << 7);
-  
-  //needBit = (buf << nbits) & 1;
-  //if (((buf >> nbits) & 1) == 0)
-  //if (((buf << (7-nbits)) & 1) == 0)
-  //{
-  //  nbits++;
-  //  return 0;
-  //}
-  // Check if the bit read is 1 so we return 1
-  //else if (((buf >> nbits) & 1) == 1)
-  //else if (((buf << (7-nbits)) & 1) == 1)
-  //{
-  //  nbits++;
-  //  return 1;
-  //}
+  // Increment the number of bits
   nbits++;
-  //if (needBit == 1)
+  // Return 1 if this is equal to 1
   if ((needBit>>7) == 1)
   {
     return 1;
   }
-  //else if (needBit == 0)
+  // Return 0 if this is equal to 0
   else if ((needBit>>7) == 0)
   {
     return 0;

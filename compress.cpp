@@ -5,7 +5,6 @@
  * Email: rikhan@ucsd.edu
  */
 
-//#include <stdlib>
 #include "HCTree.h"
 #include <ctype.h>
 #include <iostream>
@@ -13,82 +12,81 @@
 
 using namespace std;
 
+/**
+ * Function: Main
+ * Parameters: argc, argv[]
+ * Purpose: Used to read in the files and from those files we 
+ * will be encoding the tree into bits by using BitOutputStream
+ */
 int main(int argc, char* argv[])
 {
+  // Used to read in the file
   ifstream READ;
+  // Used to write into the file
   ofstream WRITE;
-  //BitOutputStream WRITE;
-  // Pass this in after you open up the file.
-  //BitOutputStream* WRITE2 = new BitOutputStream(WRITE);
+  // The tree we are trying to build
   HCTree theTree;
-  //std::vector<int> treeVec(256, 0);
+  // The vector that we are making
   std::vector<unsigned int> treeVec(256, 0);
-  //treeVec = vector<HCNode*>(256, (HCNode*) 0);
+  // Used to store the necessary elements into the vector
   unsigned int k = 0;
+  // The character that we are reading in
   unsigned char y;
-  unsigned int x = 0;
-  string theString;
-  //char z;
 
+  // Open the file that I am reading in
   READ.open(argv[1]);
 
-  // Read through the file and increment when I fin the character
-  //while (READ.get(y) != NULL)
-  //READ.get();
+  // Read through the file and increment when I find the
+  // character
   while (1)
   {
-    //std::getline(READ, theString);
-    //x = stoi(theString);
+    // Get the characters from the file
     y = READ.get();
-    //treeVec[(int) y]++;
+    // Increment what is in the vector
     treeVec[y]++;
-    //treeVec[x]++;
-    //cout << "TREEVEC" << endl;
-    //treeVec.push();
+    // Check if we are done reading in the file
     if (!READ.good())
     {
       break;
     }
   }
+  // Close what we just finished reading
   READ.close();
+  // Build the tree based on what is in the vector
   theTree.build(treeVec);
 
+  // Open up where we are writing to
   WRITE.open(argv[2]);
+  // Loop through the vector and add to the ofstream
   for (k = 0; k < treeVec.size(); k++)
   {
     WRITE << treeVec[k] << endl;
-    //cout << "HELLO " << endl;
   }
-  //cout << "JK " << endl;
+  // Open the file and initialize a new BitOutputStream
   READ.open(argv[1]);
   BitOutputStream* WRITE2 = new BitOutputStream(WRITE);
 
-  //cout << "AFTER JK " << endl;
-  //while (READ.get(z) != NULL)
-  //while (READ.get(y) != NULL)
-  // To Throw a newline character
-  //READ.get();
+  // Read the input instream to get the characters and encode the tree
   while (1)
   {
-    //std::getline(READ, theString);
-    y = READ.get();
-    
-    //cout << "START ENCODE " << endl;
-    //theTree.encode((byte)y, WRITE);
+    // Gets the characters
+    y = READ.get();   
+    // Starts encoding the tree with the received characters
     theTree.encode((byte)y, *WRITE2);
-    //cout << "THE ENCODE " << endl;
+
+    // Checks if we got to the end of a file
     if (!READ.good())
     {
       break;
     }
   }
+
+  // Flush the outputstream of bits we are using and close the files
   WRITE2->flush();
   READ.close();
   WRITE.close();
+  // Delete the object that we allocated
   delete WRITE2;
-  /*if('a'<'b'){
-    cout << "hello" << endl;
-	}
-*/
+
   return 1;
 }

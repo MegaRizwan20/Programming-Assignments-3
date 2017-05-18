@@ -34,9 +34,7 @@ void BitOutputStream::writeBit(unsigned int i)
   // we have plus how much we are shifting it by
   //cout << nbits << endl;
   //buf = buf | ((i & 1) << nbits);
- // buf = buf | ((i & 1) << (7 - nbits));
+  // buf = buf | ((i & 1) << (7 - nbits));
   buf = buf | (i << (7 - nbits));
-  //buf = buf | (i << nbits);
-  //buf = buf | (i & (1 << (7 - nbits)));
   nbits++;
 }

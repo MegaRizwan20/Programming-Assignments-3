@@ -12,6 +12,12 @@
 
 using namespace std;
 
+/**
+ * Function: Main
+ * Parameters: argc, argv[]
+ * Purpose: Reads in the bits in the tree to decode the bits and recreate
+ * the file that was compressed previously
+ * */
 int main (int argc, char* argv[])
 {
   // The stream we are taking in
@@ -33,70 +39,50 @@ int main (int argc, char* argv[])
   unsigned int addStores = 0;
   // Character we are reading in
   unsigned char y;
+  // The string that we take into the code
   string theString;
-  //unsigned char nxtChar;
-  //char z;
 
+  // open the file that we are reading
   READ.open(argv[1]);
-  //BitInputStream* READ2 = new BitInputStream(READ);
-  //READ2->fill();
+  // Loop through the vector to put in the frequencies
   for (k = 0; k < treeVec.size(); k++)
   {
+    // Getting the characters
     std::getline(READ, theString);
     //READ>>store;
     //treeVec[k] = store;
+    // Storing the frequency into a vector
     treeVec[k] = (unsigned int)stoi(theString,nullptr, 0);
     //addStores = addStores + store;
+    // Counting the number of characters in the file
     addStores = addStores + treeVec[k];
-    //cout << "THE FIRST FOR " << endl;
   }
 
-  //BitInputStream* READ2 = new BitInputStream(READ);
-  /*int nextByte;
-  while ((nextByte = READ.get()) != EOF)
-  {
-    nxtChar = (unsigned char)nextByte;
-    cout << nextByte << endl;
-    cout << nxtChar << endl;
-  }*/
-
-
-
-  //cout << " AFTER THE FOR LOOP" << endl;
-  //BitInputStream* READ2 = new BitInputStream(READ);
-  // Build the tree 
+  // Build the tree so we can decode it
   theTree.build(treeVec);
+  // The BitInputStream that we need to decode the tree
   BitInputStream* READ2 = new BitInputStream(READ);
-  //READ2->fill();
 
-  //cout << " SO MUCH CODE" << endl;
+  // Opens the file we are writing to
   WRITE.open(argv[2]);
 
-  //BitInputStream* READ2 = new BitInputStream(READ);
-  //READ2->fill();
-  //cout << addStores << endl;
   // Decoding all the necessary characters
   for (k = 0; k < addStores-1; k++)
   {
-    //y = theTree.decode(READ);
+    // We decode the characters in the tree
     y = theTree.decode(*READ2);
-    //cout << y << endl;
+    // Checking if we read in a bad character
     if (y == -1)
     {
       break;
     }
-    /*if (y == EOF)
-    {
-      break;
-    }*/
-    /*if (y < 0 || y > 256)
-    {
-      break;
-    }*/
+    // We write the characters into the file
     WRITE << y;
   }
+  // Close the file and delete the BitInputStream we created
   READ.close();
   WRITE.close();
   delete READ2;
+
   return 1;
 }
