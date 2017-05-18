@@ -45,7 +45,8 @@ public:
      *  POSTCONDITION:  root points to the root of the trie,
      *  and leaves[i] points to the leaf node containing byte i.
      */
-    void build(const vector<int>& freqs);
+    //void build(const vector<int>& freqs);
+    void build(const vector <unsigned int>& freqs);
 
     /** Write to the given BitOutputStream
      *  the sequence of bits coding the given symbol.
@@ -53,7 +54,7 @@ public:
      *  tree, and initialize root pointer and leaves vector.
      *  TODO UNCOMMENT THIS
      */
-    //void encode(byte symbol, BitOutputStream& out) const;
+    void encode(byte symbol, BitOutputStream& out) const;
 
     /** Write to the given ofstream
      *  the sequence of bits (as ASCII) coding the given symbol.
@@ -62,7 +63,7 @@ public:
      *  THIS METHOD IS USEFUL FOR THE CHECKPOINT BUT SHOULD NOT 
      *  BE USED IN THE FINAL SUBMISSION.
      */
-    void encode(byte symbol, ofstream& out) const;
+    //void encode(byte symbol, ofstream& out) const;
 
 
     /** Return symbol coded in the next sequence of bits from the stream.
@@ -70,7 +71,7 @@ public:
      *  tree, and initialize root pointer and leaves vector. TODO
      *  UNCOMMENT THIS
      */
-    //int decode(BitInputStream& in) const;
+    int decode(BitInputStream& in) const;
 
     /** Return the symbol coded in the next sequence of bits (represented as 
      *  ASCII text) from the ifstream.
@@ -79,7 +80,7 @@ public:
      *  THIS METHOD IS USEFUL FOR THE CHECKPOINT BUT SHOULD NOT BE USED
      *  IN THE FINAL SUBMISSION.
      */
-    int decode(ifstream& in) const;
+    //int decode(ifstream& in) const;
 
     void deleteAll(HCNode* n);
 

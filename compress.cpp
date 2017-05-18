@@ -16,21 +16,32 @@ int main(int argc, char* argv[])
 {
   ifstream READ;
   ofstream WRITE;
+  //BitOutputStream WRITE;
+  // Pass this in after you open up the file.
+  //BitOutputStream* WRITE2 = new BitOutputStream(WRITE);
   HCTree theTree;
-  std::vector<int> treeVec(256, 0);
+  //std::vector<int> treeVec(256, 0);
+  std::vector<unsigned int> treeVec(256, 0);
   //treeVec = vector<HCNode*>(256, (HCNode*) 0);
-  int k = 0;
-  char y;
+  unsigned int k = 0;
+  unsigned char y;
   //char z;
 
   READ.open(argv[1]);
 
   // Read through the file and increment when I fin the character
-  while (READ.get(y) != NULL)
+  //while (READ.get(y) != NULL)
+  while (1)
   {
-    treeVec[(int) y]++;
+    y = READ.get();
+    //treeVec[(int) y]++;
+    treeVec[y]++;
     //cout << "TREEVEC" << endl;
     //treeVec.push();
+    if (!READ.good())
+    {
+      break;
+    }
   }
   READ.close();
   theTree.build(treeVec);
@@ -43,17 +54,29 @@ int main(int argc, char* argv[])
   }
   //cout << "JK " << endl;
   READ.open(argv[1]);
+  BitOutputStream* WRITE2 = new BitOutputStream(WRITE);
 
   //cout << "AFTER JK " << endl;
   //while (READ.get(z) != NULL)
-  while (READ.get(y) != NULL)
+  //while (READ.get(y) != NULL)
+  while (1)
   {
+    y = READ.get();
     //cout << "START ENCODE " << endl;
-    theTree.encode((byte)y, WRITE);
+    //theTree.encode((byte)y, WRITE);
+    theTree.encode((byte)y, *WRITE2);
     //cout << "THE ENCODE " << endl;
+    if (!READ.good())
+    {
+      break;
+    }
   }
+  WRITE2->flush();
   READ.close();
   WRITE.close();
-
+  /*if('a'<'b'){
+    cout << "hello" << endl;
+	}
+*/
   return 1;
 }
